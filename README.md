@@ -1,2 +1,2 @@
 # zoodb
-Proyecto Zoo Database Examen
+Proyecto de Zoo Database examen práctico viernes 16
