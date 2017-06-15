@@ -7,5 +7,8 @@ namespace ZooApp.Models
 {
     public class TiposAnimal
     {
+
+        public long id { get; set; }
+        public string denominacion { get; set; }
     }
 }

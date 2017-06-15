@@ -4,36 +4,138 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using ZooApp.Models;
+using ZooApp.DB;
 
-namespace ZooApp.Controllers
+namespace ZooApi.Controllers
 {
     public class ClasificacionController : ApiController
     {
         // GET: api/Clasificacion
-        public IEnumerable<string> Get()
+        public RespuestaApi Get()
         {
-            return new string[] { "value1", "value2" };
+            RespuestaApi resultado = new RespuestaApi();
+            List<Clasificacion> listaClasific = new List<Clasificacion>();
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    listaClasific = Db.GetClasificacion();
+                }
+                resultado.error = "";
+                Db.Desconectar();
+            }
+            catch
+            {
+                resultado.error = "Se produjo un error";
+            }
+
+            resultado.totalElementos = listaClasific.Count;
+            resultado.dataClasificacion = listaClasific;
+            return resultado;
         }
 
         // GET: api/Clasificacion/5
-        public string Get(int id)
+        public RespuestaApi Get(long id)
         {
-            return "value";
+            RespuestaApi resultado = new RespuestaApi();
+            List<Clasificacion> listaClasific = new List<Clasificacion>();
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    listaClasific = Db.GetClasificacionPorId(id);
+                }
+                resultado.error = "";
+                Db.Desconectar();
+            }
+            catch
+            {
+                resultado.error = "Se produjo un error";
+            }
+
+            resultado.totalElementos = listaClasific.Count;
+            resultado.dataClasificacion = listaClasific;
+            return resultado;
         }
 
         // POST: api/Clasificacion
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]Clasificacion clasif)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.AgregarClasificacion(clasif);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.error = "Error al agregar la Clasificación";
+            }
+            return Ok(resultado);
         }
 
         // PUT: api/Clasificacion/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]Clasificacion clasif)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.ActualizarClasificacion(id, clasif);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al actualizar la Clasificación";
+            }
+            return Ok(resultado);
         }
 
         // DELETE: api/Clasificacion/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.EliminarClasificacion(id);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al Eliminar la Clasificación";
+            }
+            return Ok(resultado);
         }
     }
 }

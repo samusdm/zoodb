@@ -7,5 +7,11 @@ namespace ZooApp.Models
 {
     public class Especie
     {
+        public long idEspecie { get; set; }
+        public Clasificacion Clasificacion { get; set; }
+        public TiposAnimal TipoAnimal { get; set; }
+        public string nombre { get; set; }
+        public short nPatas { get; set; }
+        public bool esMascota { get; set; }
     }
 }
