@@ -62,10 +62,8 @@ namespace ZooApp.DB
         public static List<TiposAnimal> GetTiposAnimales()
         {
             List<TiposAnimal> resultado = new List<TiposAnimal>();
-
             string procedimiento = "dbo.GetTiposAnimales";
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
-
             comando.CommandType = CommandType.StoredProcedure;
             SqlDataReader reader = comando.ExecuteReader();
 
@@ -83,10 +81,7 @@ namespace ZooApp.DB
         public static List<TiposAnimal> GetTiposAnimalesPorId(long id)
         {
             List<TiposAnimal> resultado = new List<TiposAnimal>();
-
             string procedimiento = "dbo.GetTiposAnimalesPorId";
-
-
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametroId = new SqlParameter();
@@ -94,7 +89,6 @@ namespace ZooApp.DB
             parametroId.SqlDbType = SqlDbType.BigInt;
             parametroId.SqlValue = id;
             comando.Parameters.Add(parametroId);
-
             SqlDataReader reader = comando.ExecuteReader();
 
             while (reader.Read())
@@ -111,15 +105,12 @@ namespace ZooApp.DB
         public static int AgregarTiposAnimales(TiposAnimal claseDeAnimal)
         {
             string procedimiento = "dbo.AgregarTipoAnimal";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametro = new SqlParameter();
             parametro.ParameterName = "denominacion";
             parametro.SqlDbType = SqlDbType.NVarChar;
             parametro.SqlValue = claseDeAnimal.denominacion;
-
             comando.Parameters.Add(parametro);
             int filasAfectadas = comando.ExecuteNonQuery();
 
@@ -129,7 +120,6 @@ namespace ZooApp.DB
         public static int ActualizarTiposAnimales(long id, TiposAnimal claseDeAnimal)
         {
             string procedimiento = "dbo.ActualizarTiposAnimales";
-
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametroId = new SqlParameter();
@@ -137,7 +127,6 @@ namespace ZooApp.DB
             parametroId.SqlDbType = SqlDbType.BigInt;
             parametroId.SqlValue = id;
             comando.Parameters.Add(parametroId);
-
             SqlParameter parametroDenominacion = new SqlParameter();
             parametroDenominacion.ParameterName = "denominacion";
             parametroDenominacion.SqlDbType = SqlDbType.NVarChar;
@@ -152,7 +141,6 @@ namespace ZooApp.DB
         public static int EliminarTipoAnimal(long id)
         {
             string procedimiento = "dbo.EliminarTipoAnimal";
-
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametro = new SqlParameter();
@@ -168,10 +156,7 @@ namespace ZooApp.DB
         public static List<Clasificacion> GetClasificacion()
         {
             List<Clasificacion> resultado = new List<Clasificacion>();
-
             string procedimiento = "dbo.GetClasificacion";
-
-
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
 
@@ -190,18 +175,14 @@ namespace ZooApp.DB
         {
             List<Clasificacion> resultado = new List<Clasificacion>();
 
-            string procedimiento = "dbo.GetClasificacionPorId";
-
-  
-            SqlCommand comando = new SqlCommand(procedimiento, conexion);
-           
+            string procedimiento = "dbo.GetClasificacionPorId";  
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);           
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametroId = new SqlParameter();
             parametroId.ParameterName = "idClasificacion";
             parametroId.SqlDbType = SqlDbType.BigInt;
             parametroId.SqlValue = id;
             comando.Parameters.Add(parametroId);
-
             SqlDataReader reader = comando.ExecuteReader();
 
             while (reader.Read())
@@ -209,7 +190,6 @@ namespace ZooApp.DB
                 Clasificacion clasific = new Clasificacion();
                 clasific.id = (int)reader["idClasificacion"];
                 clasific.denominacion = reader["denominacion"].ToString();
-                // añadir a la lista que voy a devolver
                 resultado.Add(clasific);
             }
             return resultado;
@@ -218,15 +198,12 @@ namespace ZooApp.DB
         public static int AgregarClasificacion(Clasificacion clasif)
         {
             string procedimiento = "dbo.AgregarClasificacion";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametro = new SqlParameter();
             parametro.ParameterName = "denominacion";
             parametro.SqlDbType = SqlDbType.NVarChar;
             parametro.SqlValue = clasif.denominacion;
-
             comando.Parameters.Add(parametro);
             int filasAfectadas = comando.ExecuteNonQuery();
 
@@ -236,8 +213,7 @@ namespace ZooApp.DB
         public static int ActualizarClasificacion(long id, Clasificacion clasif)
         {
             string procedimiento = "dbo.ActualizarClasificacion";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
+            
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametro = new SqlParameter();
@@ -245,7 +221,6 @@ namespace ZooApp.DB
             parametro.SqlDbType = SqlDbType.BigInt;
             parametro.SqlValue = id;
             comando.Parameters.Add(parametro);
-
             SqlParameter parametroDenominacion = new SqlParameter();
             parametroDenominacion.ParameterName = "denominacion";
             parametroDenominacion.SqlDbType = SqlDbType.NVarChar;
@@ -253,15 +228,12 @@ namespace ZooApp.DB
             comando.Parameters.Add(parametroDenominacion);
 
             int filasAfectadas = comando.ExecuteNonQuery();
-
             return filasAfectadas;
         }
 
         public static int EliminarClasificacion(long id)
         {
             string procedimiento = "dbo.EliminarClasificacion";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO (LA BD)
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametro = new SqlParameter();
@@ -274,25 +246,20 @@ namespace ZooApp.DB
             return filasAfectadas;
         }
 
-        // <<<<<<<<<FUNCIONES PARA ESPECIE>>>>>>>>>>>
+
 
         public static List<Especie> GetEspecies()
         {
-            // CREO EL OBJETO EN EL QUE SE DEVOLVERÁN LOS RESULTADOS
+
             List<Especie> resultado = new List<Especie>();
-
-            // PREPARO LA LLAMADA AL PROCEDIMIENTO ALMACENADO
-            string procedimiento = "dbo.GetEspecies";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO
+            string procedimiento = "dbo.GetEspecies";            
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
-            // EJECUTO EL COMANDO
             SqlDataReader reader = comando.ExecuteReader();
-            // RECORRO EL RESULTADO Y LO PASO A LA VARIABLE A DEVOLVER
+
             while (reader.Read())
             {
-                // CREO LA ESPECIE
+
                 Especie especie = new Especie();
                 especie.idEspecie = (long)reader["idEspecie"];
                 especie.nombre = reader["NombreEspecie"].ToString();
@@ -304,7 +271,6 @@ namespace ZooApp.DB
                 especie.TipoAnimal.denominacion = reader["Clasificacion"].ToString();
                 especie.nPatas = (short)reader["nPatas"];
                 especie.esMascota = (bool)reader["esMascota"];
-                // AÑADO LA ESPECIE A LA LISTA DE RESULTADOS
                 resultado.Add(especie);
             }
             return resultado;
@@ -312,13 +278,8 @@ namespace ZooApp.DB
 
         public static List<Especie> GetEspeciesPorId(long id)
         {
-            // CREO EL OBJETO EN EL QUE SE DEVOLVERÁN LOS RESULTADOS
             List<Especie> resultado = new List<Especie>();
-
-            // PREPARO LA LLAMADA AL PROCEDIMIENTO ALMACENADO
             string procedimiento = "dbo.GetEspeciesPorId";
-
-            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO
             SqlCommand comando = new SqlCommand(procedimiento, conexion);
             comando.CommandType = CommandType.StoredProcedure;
             SqlParameter parametroId = new SqlParameter();
@@ -328,10 +289,9 @@ namespace ZooApp.DB
             comando.Parameters.Add(parametroId);
 
             SqlDataReader reader = comando.ExecuteReader();
-            // RECORRO EL RESULTADO Y LO PASO A LA VARIABLE A DEVOLVER
             while (reader.Read())
             {
-                // CREO LA ESPECIE
+
                 Especie especie = new Especie();
                 especie.idEspecie = (long)reader["idEspecie"];
                 especie.nombre = reader["NombreEspecie"].ToString();
@@ -343,7 +303,6 @@ namespace ZooApp.DB
                 especie.TipoAnimal.denominacion = reader["Clasificacion"].ToString();
                 especie.nPatas = (short)reader["nPatas"];
                 especie.esMascota = (bool)reader["esMascota"];
-                // AÑADO LA ESPECIE A LA LISTA DE RESULTADOS
                 resultado.Add(especie);
             }
             return resultado;
