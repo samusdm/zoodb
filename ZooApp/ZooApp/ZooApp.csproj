@@ -116,12 +116,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ClasificacionController.cs" />
     <Compile Include="Controllers\EspecieController.cs" />
-    <Compile Include="Controllers\RespuestaApi.cs" />
     <Compile Include="Controllers\TiposAnimalController.cs" />
     <Compile Include="DB\db.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\RespuestaApi.cs" />
     <Compile Include="Models\TiposAnimal.cs" />
     <Compile Include="Models\Especie.cs" />
     <Compile Include="Models\Clasificacion.cs" />
