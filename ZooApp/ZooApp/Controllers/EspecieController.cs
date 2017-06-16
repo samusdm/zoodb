@@ -64,19 +64,87 @@ namespace ZooApi.Controllers
         }
 
         // POST: api/Especie
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public IHttpActionResult Post([FromBody]Especie especie)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.AgregarEspecie(especie);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al agregar la Especie";
+            }
+
+            return Ok(resultado);
 
         }
 
         // PUT: api/Especie/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]Especie especie)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.ActualizarEspecie(id, especie);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al actualizar la Especie";
+            }
+
+            return Ok(resultado);
+
         }
 
         // DELETE: api/Especie/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
+            RespuestaApi resultado = new RespuestaApi();
+            resultado.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.EliminarEspecie(id);
+                }
+                resultado.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception)
+            {
+                resultado.totalElementos = 0;
+                resultado.error = "Error al eliminar la Especie";
+            }
+
+            return Ok(resultado);
+
         }
     }
 }
